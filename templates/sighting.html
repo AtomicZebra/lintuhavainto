@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Uusi havainto</title>
+</head>
+
+<body>
+    <hl>Uusi havainto</hl>
+    <form action="/create_sighting" method="post">
+    <p>
+        Lintulaji: <br />
+        <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
+        <input type="text" name="bird_species" />
+    </p>
+    <p>
+        Kunta: <br/>
+        <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
+        <input type="text" name="kunta" />
+    </p>
+    <p>
+        Paikka: <br />
+        <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
+        <input type="text" name="location" />
+    </p>
+    <p>
+        Lisätiedot: <br />
+        <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
+        <textarea name="additional_info" rows="8" cols="40"></textarea>
+    </p>
+    <input type="submit" value="Lisää havainto" />
+  </form>
+</body>
+
+</html>

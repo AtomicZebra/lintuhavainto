@@ -4,7 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import db
 import config
-
+import sightings
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -12,7 +12,28 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_sightings = sightings.get_sighting()
+    return render_template("index.html", sighting=all_sightings)
+
+@app.route("/sight/<int:sight_id>")
+def show_sight(sight_id):
+    sight = sightings.get_sight(sight_id)
+    return render_template("show_sighting.html", sight=sight)
+
+@app.route("/new_sighting")
+def new_sighting():
+    return render_template("sighting.html")
+
+@app.route("/create_sighting", methods=["POST"])
+def create_sighting():
+    bird_species = request.form["bird_species"]
+    kunta = request.form["kunta"]
+    location = request.form["location"]
+    additional_info = request.form["additional_info"]
+    user_id = session["user_id"]
+    sightings.add_sighting(bird_species, kunta, location, additional_info, user_id)
+
+    return redirect("/")
 
 @app.route("/register")
 def register():
@@ -44,10 +65,13 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         
-        sql = "SELECT password_hash FROM users WHERE username = ?"
-        password_hash = db.query(sql, [username])[0][0]
+        sql = "SELECT id, password_hash FROM users WHERE username = ?"
+        result = db.query(sql, [username])[0]
+        user_id = result["id"]
+        password_hash = result["password_hash"]
 
         if check_password_hash(password_hash, password):
+            session["user_id"] = user_id
             session["username"] = username
             return redirect("/")
         else:
@@ -55,5 +79,6 @@ def login():
 
 @app.route("/logout")
 def logout():
+    del session["user_id"]
     del session["username"]
     return redirect("/") 
