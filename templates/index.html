@@ -32,16 +32,22 @@
   {% else %}
   <p>
     <a href="/login">Kirjaudu sisään</a>
+  </p>
+  <p>
     <a href="/register">Luo tunnus</a>
   </p>
   {% endif %}
+  <h3>Toiminnot</h3>
   <p>
     <a href="/new_sighting">Uusi havainto</a>
+  </p>
+  <p>
+    <a href="/find_sighting">Etsi havainto</a>
   </p>
   <h2>Viimeisimmät havainnot</h2>
   <ul>
     {% for sight in sighting %}
-    <li><a href="/sight/{{sight.id}}">{{ sight.bird_species }}</a> </li>
+    <li><a href="/sight/{{sight.id}}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
     {% endfor %}
   </ul>
 </body>

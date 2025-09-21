@@ -5,7 +5,7 @@ def add_sighting(bird_species, kunta, location, additional_info, user_id):
     db.execute(sql, [bird_species, kunta, location, additional_info, user_id])
 
 def get_sighting():
-    sql = "SELECT id, bird_species FROM items ORDER BY id DESC"
+    sql = "SELECT id, bird_species, time_added FROM items ORDER BY id DESC"
 
     return db.query(sql)
 
@@ -36,3 +36,10 @@ def update_sighting(sight_id, bird_species, kunta, location, additional_info):
 def remove_sighting(sight_id):
     sql = "DELETE FROM items WHERE id = ?"
     db.execute(sql, [sight_id])
+
+def find_sightings(query):
+    sql = """SELECT id, bird_species, time_added
+    FROM items
+    WHERE bird_species LIKE ? OR kunta LIKE ? OR location LIKE ?"""
+    like = "%" + query + "%"
+    return db.query(sql,[like, like, like])

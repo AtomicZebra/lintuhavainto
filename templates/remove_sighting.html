@@ -7,7 +7,7 @@
 
 <body>
     <hl>Havainnon poisto</hl>
-    <p>Havainto: {{ sight.bird_species }}</p>
+    <p>Havainto: {{ sight.bird_species }} - {{ sight.time_added }}</p>
     <p>Haluatko poistaa tämän havainnon?</p>
     <form action="/remove_sighting/{{ sight.id }}" method="post">
         <input type="submit" name="remove" value="Poista havainto">

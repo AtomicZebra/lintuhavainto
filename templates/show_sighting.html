@@ -6,8 +6,8 @@
 </head>
 
 <body>
-    <hl>{{ sight.bird_species }}</hl>
-
+    <h1>{{ sight.bird_species }}</h1>
+    <h2>{{ sight.time_added }}</h2>
     {% if session.user_id == sight.user_id %}
     <p>
         <a href="/edit_sighting/{{ sight.id }}">Muokkaa havaintoa</a>
@@ -15,13 +15,16 @@
     </p>   
     {% endif %}
     <p>
+        <strong>Lähiö - Kaupunki</strong> </br>
         {{ sight.location }} - {{ sight.kunta }}
     </p>
     <p>
-        Lisätiedot: {{ sight.additional_info }}
+        <strong>Lisätiedot</strong> </br>
+        {{ sight.additional_info }}
     </p>
     <p>
-        Havainnoitsija: {{ sight.username }}
+        <strong>Havainnoitsija</strong> </br>
+        {{ sight.username }}
     </p>
     <p>
         <a href="/">Takaisin</a>

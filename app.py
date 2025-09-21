@@ -20,6 +20,16 @@ def show_sight(sight_id):
     sight = sightings.get_sight(sight_id)
     return render_template("show_sighting.html", sight=sight)
 
+@app.route("/find_sighting")
+def find_sighting():
+    query = request.args.get("query")
+    if query:
+        results = sightings.find_sightings(query)
+    else:
+        query = ""
+        results = []
+    return render_template("find_sighting.html", query=query, results=results)
+
 @app.route("/new_sighting")
 def new_sighting():
     return render_template("add_sighting.html")

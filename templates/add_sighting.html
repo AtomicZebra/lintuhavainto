@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <hl>Uusi havainto</hl>
+    <h1>Uusi havainto</h1>
     <form action="/create_sighting" method="post">
     <p>
         Lintulaji: <br />
@@ -14,12 +14,12 @@
         <input type="text" name="bird_species" />
     </p>
     <p>
-        Kunta: <br/>
+        Kaupunki: <br/>
         <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
         <input type="text" name="kunta" />
     </p>
     <p>
-        Paikka: <br />
+        Lähiö: <br />
         <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
         <input type="text" name="location" />
     </p>
@@ -30,6 +30,9 @@
     </p>
     <input type="submit" value="Lisää havainto" />
   </form>
+    <p>
+        <a href="/">Takaisin</a>
+    </p>
 </body>
 
 </html>
