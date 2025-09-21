@@ -1,14 +1,14 @@
 # Lintuhavainto
 ## Sovelluksen toiminnot
-- Sovelluksessa käyttäjät voivat jakaa missä ja ~~milloin~~ ovat havainneet linnun
-> Aika ei vielä toiminallinen
-- Käyttäjä voi lisäksi kirjoittaa lisätietoja ~~sekä laittamaan kuvan havainnosta~~
-> Kuvan lisäys puuttuu
+- Sovelluksessa käyttäjät voivat jakaa missä ovat havainneet linnun
+- Käyttäjä voi lisäksi kirjoittaa lisätietoja
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään
 - Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan lintuhavainnot
 - Käyttäjä näkee sovellukseen lisätyt havainnot
 
 ### Sovelluksen puuttuvat ominaisuudet:
+- Havainnon ajan kirjaaminen
+- Havainnon kuvan lisäys
 - Käyttäjä voi hakea lintuhavaintoja hakusanalla
 - Käyttäjä voi luokitella milloin lintu on havaittu (kuukausi/vuosi)
 - Käyttäjäsivu näyttää mitä havaintoja käyttäjä on tehnyt
