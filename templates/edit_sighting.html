@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Havainnon muokkaus</title>
+</head>
+
+<body>
+    <hl>Havainnon muokkaus</hl>
+    <form action="/update_sighting" method="post">
+    <p>
+        Lintulaji: <br />
+        <input type="text" name="bird_species" value="{{ sight.bird_species }}" />
+    </p>
+    <p>
+        Kunta: <br/>
+        <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
+        <input type="text" name="kunta" value="{{ sight.kunta }}"/>
+    </p>
+    <p>
+        Paikka: <br />
+        <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
+        <input type="text" name="location" value="{{ sight.location }}"/>
+    </p>
+    <p>
+        Lisätiedot: <br />
+        <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
+        <textarea name="additional_info" rows="8" cols="40">{{ sight.additional_info }}</textarea>
+    </p>
+    <input type="hidden" name="sight_id" value="{{sight.id}}" />
+    <input type="submit" value="Päivitä havainto" />
+  </form>
+</body>
+
+</html>

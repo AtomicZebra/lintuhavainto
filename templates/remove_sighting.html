@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Havainnon poisto</title>
+</head>
+
+<body>
+    <hl>Havainnon poisto</hl>
+    <p>Havainto: {{ sight.bird_species }}</p>
+    <p>Haluatko poistaa tämän havainnon?</p>
+    <form action="/remove_sighting/{{ sight.id }}" method="post">
+        <input type="submit" name="remove" value="Poista havainto">
+        <input type="submit" name="back" value="Palaa takaisin">
+    </form>
+</body>
+
+</html>

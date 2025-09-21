@@ -7,6 +7,13 @@
 
 <body>
     <hl>{{ sight.bird_species }}</hl>
+
+    {% if session.user_id == sight.user_id %}
+    <p>
+        <a href="/edit_sighting/{{ sight.id }}">Muokkaa havaintoa</a>
+        <a href="/remove_sighting/{{ sight.id }}">Poista havainto</a>
+    </p>   
+    {% endif %}
     <p>
         {{ sight.location }} - {{ sight.kunta }}
     </p>

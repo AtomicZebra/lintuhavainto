@@ -22,7 +22,7 @@ def show_sight(sight_id):
 
 @app.route("/new_sighting")
 def new_sighting():
-    return render_template("sighting.html")
+    return render_template("add_sighting.html")
 
 @app.route("/create_sighting", methods=["POST"])
 def create_sighting():
@@ -34,6 +34,35 @@ def create_sighting():
     sightings.add_sighting(bird_species, kunta, location, additional_info, user_id)
 
     return redirect("/")
+
+@app.route("/edit_sighting/<int:sight_id>")
+def edit_sighting(sight_id):
+    sight = sightings.get_sight(sight_id)
+    return render_template("edit_sighting.html", sight=sight)
+
+@app.route("/update_sighting", methods=["POST"])
+def update_sighting():
+    sight_id = request.form["sight_id"]
+    bird_species = request.form["bird_species"]
+    kunta = request.form["kunta"]
+    location = request.form["location"]
+    additional_info = request.form["additional_info"]
+    sightings.update_sighting(sight_id, bird_species, kunta, location, additional_info)
+
+    return redirect("/sight/" + str(sight_id))
+
+@app.route("/remove_sighting/<int:sight_id>", methods=["GET", "POST"])
+def remove_sighting(sight_id):
+    if request.method == "GET":
+        sight = sightings.get_sight(sight_id)
+        return render_template("remove_sighting.html", sight=sight)
+    
+    if request.method == "POST":
+        if "remove" in request.form:
+            sightings.remove_sighting(sight_id)
+            return redirect("/")
+        else:
+            return redirect("/sight/" + str(sight_id))
 
 @app.route("/register")
 def register():
