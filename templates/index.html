@@ -10,7 +10,7 @@
 
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}
+    Olet kirjautunut sisään nimellä: <strong>{{ session.username }}</strong>
   </p>
   {% else %}
   <form action="/login" method="post">
@@ -25,16 +25,20 @@
     <input type="submit" value="Kirjaudu" />
   </form>
   {% endif %}
+  {% if session.username %}
+  <p>
+    <a href="/logout">Kirjaudu ulos</a>
+  </p>
+  {% else %}
   <p>
     <a href="/login">Kirjaudu sisään</a>
     <a href="/register">Luo tunnus</a>
-    <a href="/logout">Kirjaudu ulos</a>
   </p>
-
+  {% endif %}
   <p>
     <a href="/new_sighting">Uusi havainto</a>
   </p>
-  <h2>Havainnot</h2>
+  <h2>Viimeisimmät havainnot</h2>
   <ul>
     {% for sight in sighting %}
     <li><a href="/sight/{{sight.id}}">{{ sight.bird_species }}</a> </li>

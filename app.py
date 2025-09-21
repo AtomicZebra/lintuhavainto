@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import db
 import config
@@ -38,6 +38,8 @@ def create_sighting():
 @app.route("/edit_sighting/<int:sight_id>")
 def edit_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
+    if sight["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_sighting.html", sight=sight)
 
 @app.route("/update_sighting", methods=["POST"])
@@ -53,8 +55,11 @@ def update_sighting():
 
 @app.route("/remove_sighting/<int:sight_id>", methods=["GET", "POST"])
 def remove_sighting(sight_id):
+    sight = sightings.get_sight(sight_id)
+    if sight["user_id"] != session["user_id"]:
+        abort(403)
+
     if request.method == "GET":
-        sight = sightings.get_sight(sight_id)
         return render_template("remove_sighting.html", sight=sight)
     
     if request.method == "POST":
