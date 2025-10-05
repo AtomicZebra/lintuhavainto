@@ -11,22 +11,22 @@
     <p>
         Lintulaji: <br />
         <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
-        <input type="text" name="bird_species" />
+        <input type="text" name="bird_species" maxlength="50" required/>
     </p>
     <p>
         Kaupunki: <br/>
         <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
-        <input type="text" name="kunta" />
+        <input type="text" name="municipality" maxlength="50" required/>
     </p>
     <p>
         Lähiö: <br />
         <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
-        <input type="text" name="location" />
+        <input type="text" name="location" maxlength="50" required/>
     </p>
     <p>
         Lisätiedot: <br />
         <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
-        <textarea name="additional_info" rows="8" cols="40"></textarea>
+        <textarea name="additional_info" rows="8" cols="40" maxlength="1000"></textarea>
     </p>
     <input type="submit" value="Lisää havainto" />
   </form>

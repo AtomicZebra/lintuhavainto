@@ -14,6 +14,14 @@ def require_login():
     if "user_id" not in session:
         abort(403)
 
+def check_requirements(data, length: int, required: bool):
+    if required:
+        if len(data) > length or not data:
+            abort(403)
+    else:
+        if len(data) > length:
+            abort(403)
+
 @app.route("/")
 def index():
     all_sightings = sightings.get_sighting()
@@ -44,9 +52,17 @@ def new_sighting():
 @app.route("/create_sighting", methods=["POST"])
 def create_sighting():
     bird_species = request.form["bird_species"]
-    municipality = request.form["kunta"]
+    check_requirements(bird_species, 50, True)
+
+    municipality = request.form["municipality"]
+    check_requirements(municipality, 50, True)
+    
     location = request.form["location"]
+    check_requirements(location, 50, True)
+    
     additional_info = request.form["additional_info"]
+    check_requirements(additional_info, 1000, False)
+
     user_id = session["user_id"]
     sightings.add_sighting(bird_species, municipality, location, additional_info, user_id)
 
