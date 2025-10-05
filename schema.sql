@@ -11,7 +11,16 @@ CREATE TABLE items (
     location TEXT,
     additional_info TEXT,
     user_id INTEGER REFERENCES users,
-    time_added TEXT
+    time_added TEXT,
+    image BLOB
+);
+
+CREATE TABLE thread(
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    user_id INTEGER REFERENCES users,
+    message TEXT,
+    time_sent TEXT
 );
 
 CREATE TABLE classes (

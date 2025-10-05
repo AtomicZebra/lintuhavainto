@@ -14,8 +14,8 @@
         <a href="/remove_sighting/{{ sight.id }}">Poista havainto</a>
     </p>   
     {% endif %}
+
     <p>
-       
         {% for class in classes %}
         <strong> {{class.title}} </strong> </br>
         {{ class.value }}
@@ -33,6 +33,23 @@
         <strong>Havainnoitsija</strong> </br>
         <a href="/user/{{ sight.user_id }}"> {{ sight.username }}</a>
     </p>
+
+    <h2>Keskustelu</h2>
+    {% for message in messages %}
+    <small>{{ message.time_sent }}</small>
+    <a href="/user%{{ message.user_id }}">{{ message.username }}</a>: {{ message.message }} </br>
+    {% endfor %}
+
+    <form action="/new_message" method="post">
+        <p>
+            <strong>Viesti</strong> </br>
+            <textarea name="message" rows="8" cols="40" maxlength="1000" required></textarea> </br>
+        </p>
+        <input type="hidden" name="sight_id" value="{{ sight.id }}">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" value="Lähetä" />
+    </form>
+
     <p>
         <a href="/">Takaisin</a>
     </p>

@@ -44,6 +44,7 @@
         <textarea name="additional_info" rows="8" cols="40" maxlength="1000">{{ sight.additional_info }}</textarea>
     </p>
     <input type="hidden" name="sight_id" value="{{sight.id}}" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Päivitä havainto" />
     <input type="submit" name="back" value="Palaa takaisin">
   </form>

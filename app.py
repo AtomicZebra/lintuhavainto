@@ -1,10 +1,7 @@
-import sqlite3
+import sqlite3, secrets
 from flask import Flask
 from flask import abort, redirect, render_template, request, session
-import db
-import config
-import sightings
-import users
+import config, sightings, users, threads
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -15,6 +12,10 @@ big_data_length = 1000
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 #Check whether data is within the required limits
@@ -45,7 +46,8 @@ def show_sight(sight_id):
     if not sight:
         abort(404)
     classes = sightings.get_classes(sight_id)
-    return render_template("show_sighting.html", sight=sight, classes=classes)
+    messages = threads.get_message(sight_id)
+    return render_template("show_sighting.html", sight=sight, classes=classes, messages=messages)
 
 @app.route("/find_sighting")
 def find_sighting():
@@ -65,6 +67,7 @@ def new_sighting():
 
 @app.route("/create_sighting", methods=["POST"])
 def create_sighting():
+    check_csrf()
     bird_species = request.form["bird_species"]
     check_requirements(bird_species, small_data_length, True)
 
@@ -111,10 +114,12 @@ def edit_sighting(sight_id):
 
 @app.route("/update_sighting", methods=["POST"])
 def update_sighting():
-    sight_id = request.form["sight_id"]
-
-    sight = sightings.get_sight(sight_id)
     require_login()
+    check_csrf()
+
+    sight_id = request.form["sight_id"]
+    sight = sightings.get_sight(sight_id)
+
     if not sight:
         abort(404)
 
@@ -161,6 +166,24 @@ def remove_sighting(sight_id):
         else:
             return redirect("/sight/" + str(sight_id))
 
+@app.route("/new_message", methods=["POST"])
+def new_message():
+    require_login()
+    check_csrf()
+
+    message = request.form["message"]
+    sight_id = request.form["sight_id"]
+
+    sight = sightings.get_sight(sight_id)
+    if not sight:
+        abort(404)
+
+    user_id = session["user_id"]
+
+    threads.add_message(sight_id, user_id, message)
+
+    return redirect("/sight/" + str(sight_id))
+
 @app.route("/register")
 def register():
     if not "user_id" in session:
@@ -195,6 +218,7 @@ def login():
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
+            session["csrf_token"] = secrets.token_hex(16)
             session["username"] = username
             return redirect("/")
         else:

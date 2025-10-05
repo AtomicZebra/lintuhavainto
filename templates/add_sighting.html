@@ -25,7 +25,7 @@
         </select>
     </p>
     {% endfor %}
-    
+
     <p>
         Kaupunki: <br/>
         <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
@@ -41,6 +41,7 @@
         <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
         <textarea name="additional_info" rows="8" cols="40" maxlength="1000"></textarea>
     </p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Lisää havainto" />
   </form>
     <p>
