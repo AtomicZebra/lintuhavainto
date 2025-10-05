@@ -9,11 +9,15 @@ import sightings
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+#General lengths for data
+small_data_length = 50
+big_data_length = 1000
 
 def require_login():
     if "user_id" not in session:
         abort(403)
 
+#Check whether data is within the required limits
 def check_requirements(data, length: int, required: bool):
     if required:
         if len(data) > length or not data:
@@ -52,16 +56,16 @@ def new_sighting():
 @app.route("/create_sighting", methods=["POST"])
 def create_sighting():
     bird_species = request.form["bird_species"]
-    check_requirements(bird_species, 50, True)
+    check_requirements(bird_species, small_data_length, True)
 
     municipality = request.form["municipality"]
-    check_requirements(municipality, 50, True)
+    check_requirements(municipality, small_data_length, True)
     
     location = request.form["location"]
-    check_requirements(location, 50, True)
+    check_requirements(location, small_data_length, True)
     
     additional_info = request.form["additional_info"]
-    check_requirements(additional_info, 1000, False)
+    check_requirements(additional_info, big_data_length, False)
 
     user_id = session["user_id"]
     sightings.add_sighting(bird_species, municipality, location, additional_info, user_id)
@@ -86,9 +90,17 @@ def update_sighting():
         abort(404)
 
     bird_species = request.form["bird_species"]
+    check_requirements(bird_species, small_data_length, True)
+
     municipality = request.form["municipality"]
+    check_requirements(municipality, small_data_length, True)
+    
     location = request.form["location"]
+    check_requirements(location, small_data_length, True)
+    
     additional_info = request.form["additional_info"]
+    check_requirements(additional_info, big_data_length, False)
+
     sightings.update_sighting(sight_id, bird_species, municipality, location, additional_info)
 
     return redirect("/sight/" + str(sight_id))
