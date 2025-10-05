@@ -9,7 +9,6 @@ import sightings
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
-
 @app.route("/")
 def index():
     all_sightings = sightings.get_sighting()
@@ -18,6 +17,8 @@ def index():
 @app.route("/sight/<int:sight_id>")
 def show_sight(sight_id):
     sight = sightings.get_sight(sight_id)
+    if not sight:
+        abort(404)
     return render_template("show_sighting.html", sight=sight)
 
 @app.route("/find_sighting")
@@ -48,6 +49,8 @@ def create_sighting():
 @app.route("/edit_sighting/<int:sight_id>")
 def edit_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
+    if not sight:
+        abort(404)
     if sight["user_id"] != session["user_id"]:
         abort(403)
     return render_template("edit_sighting.html", sight=sight)
@@ -55,6 +58,13 @@ def edit_sighting(sight_id):
 @app.route("/update_sighting", methods=["POST"])
 def update_sighting():
     sight_id = request.form["sight_id"]
+
+    sight = sightings.get_sight(sight_id)
+    if not sight:
+        abort(404)
+    if sight["user_id"] != session["user_id"]:
+        abort(403)    
+        
     bird_species = request.form["bird_species"]
     kunta = request.form["kunta"]
     location = request.form["location"]

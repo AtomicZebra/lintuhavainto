@@ -21,7 +21,8 @@ def get_sight(sight_id):
     users.id user_id
     FROM items, users
     WHERE items.user_id = users.id AND items.id = ?"""
-    return db.query(sql,[sight_id])[0]
+    result = db.query(sql,[sight_id])
+    return result[0] if result else None
 
 def update_sighting(sight_id, bird_species, kunta, location, additional_info):
     sql = """UPDATE items SET 
