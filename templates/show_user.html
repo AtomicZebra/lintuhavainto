@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Käyttäjä: {{ user.username }}</title>
+</head>
+
+<body>
+    <h1>Käyttäjä: {{ user.username }} </h1>
+    <p>
+        Käyttäjältä on yhteensä {{ sighting | count }} havaintoa.
+    </p>
+    <h2>Havainnot</h2>
+    <ul>
+        {% for sight in sighting %}
+        <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="/">Takaisin</a>
+    </p>
+</body>
+
+</html>

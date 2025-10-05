@@ -47,11 +47,11 @@
   <p>
     <a href="/find_sighting">Etsi havainto</a>
   </p>
-  
+
   <h2>Viimeisimmät havainnot</h2>
   <ul>
     {% for sight in sighting %}
-    <li><a href="/sight/{{sight.id}}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
+    <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
     {% endfor %}
   </ul>
 </body>
