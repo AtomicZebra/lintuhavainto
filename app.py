@@ -60,7 +60,8 @@ def find_sighting():
 @app.route("/new_sighting")
 def new_sighting():
     require_login()
-    return render_template("add_sighting.html")
+    classes = sightings.get_all_classes()
+    return render_template("add_sighting.html", classes = classes)
 
 @app.route("/create_sighting", methods=["POST"])
 def create_sighting():
@@ -79,9 +80,12 @@ def create_sighting():
     user_id = session["user_id"]
 
     classes = []
-    section = request.form["section"]
-    if section:
-        classes.append(("Lintuluokka", section))
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+    print(classes)
+    
     sightings.add_sighting(bird_species, municipality, location, additional_info, user_id, classes)
 
     return redirect("/")

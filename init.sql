@@ -1,0 +1,20 @@
+DELETE FROM classes;
+
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Haikaralinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Hietakanalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Kanalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Kirskulinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Kuikkalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Kurkilinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Kyyhkylinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Käkilinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Pelikaanilinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Päiväpetolinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Pöllölinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Rantalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Sorsalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Säihkylinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Uikkulinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Ulappalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Tikkalinnut');
+INSERT INTO classes (title, value) VALUES ('Lintuluokka', 'Varpuslinnut');

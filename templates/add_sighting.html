@@ -13,29 +13,19 @@
         <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
         <input type="text" name="bird_species" maxlength="50" required/>
     </p>
+
+    {% for class in classes %}
     <p>
-        Lintuluokka: <br />
-        <select name="section">
-            <option value="Haikaralinnut">haikaralinnut</option>
-            <option value="Hietakanalinnut">hietakanalinnut</option>
-            <option value="Kanalinnut">kanalinnut</option>
-            <option value="Kirskulinnut">kirskulinnut</option>
-            <option value="Kuikkalinnut">kuikkalinnut</option>
-            <option value="Kurkilinnut">kurkilinnut</option>
-            <option value="Kyyhkylinnut">kyyhkylinnut</option>
-            <option value="Käkilinnut">käkilinnut</option>
-            <option value="Pelikaanilinnut">pelikaanilinnut</option>
-            <option value="Päiväpetolinnut">päiväpetolinnut</option>
-            <option value="Pöllölinnut">pöllölinnut</option>
-            <option value="Rantalinnut">rantalinnut</option>
-            <option value="Sorsalinnut">sorsalinnut</option>
-            <option value="Säihkylinnut">säihkylinnut</option>
-            <option value="Uikkulinnut">uikkulinnut</option>
-            <option value="Ulappalinnut">ulappalinnut</option>
-            <option value="Tikkalinnut">tikkalinnut</option>
-            <option value="Varpuslinnut">varpuslinnut</option>
+        {{ class }}: <br />
+        <select name="classes">
+            <option value="">(valitse)</option>
+        {% for option in classes[class]%}
+        <option value= "{{ class }}:{{ option }}">{{ option }}</option>
+        {% endfor %}
         </select>
     </p>
+    {% endfor %}
+    
     <p>
         Kaupunki: <br/>
         <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>

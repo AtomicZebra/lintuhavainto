@@ -1,5 +1,17 @@
 import db
 
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
+
 def add_sighting(bird_species, municipality, location, additional_info, user_id, classes):
     sql = "INSERT INTO items (bird_species, municipality, location, additional_info, user_id, time_added) VALUES (?, ?, ?, ?, ?, datetime('now'))"
     db.execute(sql, [bird_species, municipality, location, additional_info, user_id])

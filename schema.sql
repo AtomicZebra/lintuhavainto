@@ -14,9 +14,15 @@ CREATE TABLE items (
     time_added TEXT
 );
 
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    value TEXT
+);
+
 CREATE TABLE item classes (
     id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES items,
     title TEXT,
     value TEXT
-)
+);
