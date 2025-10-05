@@ -28,3 +28,7 @@ def check_login(username, password):
         return user_id
     else:
         return None
+    
+def get_all_users():
+    sql = "SELECT id, username FROM users ORDER BY id DESC"
+    return db.query(sql)

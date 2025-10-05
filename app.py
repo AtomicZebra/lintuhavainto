@@ -30,7 +30,8 @@ def check_requirements(data, length: int, required: bool):
 @app.route("/")
 def index():
     all_sightings = sightings.get_sighting()
-    return render_template("index.html", sighting=all_sightings)
+    all_users = users.get_all_users()
+    return render_template("index.html", sighting=all_sightings, all_users = all_users)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
