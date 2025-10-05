@@ -13,7 +13,7 @@
             <small>HUOM. Haku toimii lintulajeilla, lähiöillä tai kaupungeilla</small> <br/>
             Hakusana: <input type="text" name="query" value="{{ query }}">
         </p>
-        <input type="submit" value="Läheta">
+        <input type="submit" value="Lähetä">
     </form>
     <p>
         <a href="/">Takaisin</a>
@@ -23,7 +23,7 @@
     <ul>
         {% for sight in results %}
         <li>
-            <a href="/sight/{{sight.id}}">{{ sight.bird_species }} - {{ sight.time_added }}</a>
+            <a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }}</a>
         </li>
         {% endfor %}
     </ul>

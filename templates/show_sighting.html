@@ -15,6 +15,12 @@
     </p>   
     {% endif %}
     <p>
+        <strong>Lintuluokka</strong> </br>
+        {% for class in classes %}
+        {{ class.value }}
+        {% endfor %}
+    </p>
+    <p>
         <strong>Lähiö - Kaupunki</strong> </br>
         {{ sight.location }} - {{ sight.municipality }}
     </p>

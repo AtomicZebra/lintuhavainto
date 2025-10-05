@@ -13,3 +13,10 @@ CREATE TABLE items (
     user_id INTEGER REFERENCES users,
     time_added TEXT
 );
+
+CREATE TABLE item classes (
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    title TEXT,
+    value TEXT
+)

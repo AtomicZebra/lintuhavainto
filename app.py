@@ -44,7 +44,8 @@ def show_sight(sight_id):
     sight = sightings.get_sight(sight_id)
     if not sight:
         abort(404)
-    return render_template("show_sighting.html", sight=sight)
+    classes = sightings.get_classes(sight_id)
+    return render_template("show_sighting.html", sight=sight, classes=classes)
 
 @app.route("/find_sighting")
 def find_sighting():
@@ -76,7 +77,12 @@ def create_sighting():
     check_requirements(additional_info, big_data_length, False)
 
     user_id = session["user_id"]
-    sightings.add_sighting(bird_species, municipality, location, additional_info, user_id)
+
+    classes = []
+    section = request.form["section"]
+    if section:
+        classes.append(("Lintuluokka", section))
+    sightings.add_sighting(bird_species, municipality, location, additional_info, user_id, classes)
 
     return redirect("/")
 
