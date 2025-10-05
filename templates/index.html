@@ -37,13 +37,17 @@
     <a href="/register">Luo tunnus</a>
   </p>
   {% endif %}
+
   <h3>Toiminnot</h3>
+  {% if session.username %}
   <p>
     <a href="/new_sighting">Uusi havainto</a>
   </p>
+  {% endif %}
   <p>
     <a href="/find_sighting">Etsi havainto</a>
   </p>
+  
   <h2>Viimeisimmät havainnot</h2>
   <ul>
     {% for sight in sighting %}

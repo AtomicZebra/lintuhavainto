@@ -7,7 +7,7 @@ CREATE TABLE users (
 CREATE TABLE items (
     id INTEGER PRIMARY KEY,
     bird_species TEXT,
-    kunta TEXT,
+    municipality TEXT,
     location TEXT,
     additional_info TEXT,
     user_id INTEGER REFERENCES users,

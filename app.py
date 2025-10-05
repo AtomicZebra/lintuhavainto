@@ -9,6 +9,11 @@ import sightings
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_sightings = sightings.get_sighting()
@@ -33,26 +38,26 @@ def find_sighting():
 
 @app.route("/new_sighting")
 def new_sighting():
+    require_login()
     return render_template("add_sighting.html")
 
 @app.route("/create_sighting", methods=["POST"])
 def create_sighting():
     bird_species = request.form["bird_species"]
-    kunta = request.form["kunta"]
+    municipality = request.form["kunta"]
     location = request.form["location"]
     additional_info = request.form["additional_info"]
     user_id = session["user_id"]
-    sightings.add_sighting(bird_species, kunta, location, additional_info, user_id)
+    sightings.add_sighting(bird_species, municipality, location, additional_info, user_id)
 
     return redirect("/")
 
 @app.route("/edit_sighting/<int:sight_id>")
 def edit_sighting(sight_id):
+    require_login()
     sight = sightings.get_sight(sight_id)
     if not sight:
         abort(404)
-    if sight["user_id"] != session["user_id"]:
-        abort(403)
     return render_template("edit_sighting.html", sight=sight)
 
 @app.route("/update_sighting", methods=["POST"])
@@ -60,25 +65,22 @@ def update_sighting():
     sight_id = request.form["sight_id"]
 
     sight = sightings.get_sight(sight_id)
+    require_login()
     if not sight:
         abort(404)
-    if sight["user_id"] != session["user_id"]:
-        abort(403)    
-        
+
     bird_species = request.form["bird_species"]
-    kunta = request.form["kunta"]
+    municipality = request.form["municipality"]
     location = request.form["location"]
     additional_info = request.form["additional_info"]
-    sightings.update_sighting(sight_id, bird_species, kunta, location, additional_info)
+    sightings.update_sighting(sight_id, bird_species, municipality, location, additional_info)
 
     return redirect("/sight/" + str(sight_id))
 
 @app.route("/remove_sighting/<int:sight_id>", methods=["GET", "POST"])
 def remove_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
-    if sight["user_id"] != session["user_id"]:
-        abort(403)
-
+    require_login()
     if request.method == "GET":
         return render_template("remove_sighting.html", sight=sight)
     
@@ -91,7 +93,9 @@ def remove_sighting(sight_id):
 
 @app.route("/register")
 def register():
-    return render_template("register.html")
+    if not "user_id" in session:
+        return render_template("register.html")
+    return redirect("/")
 
 @app.route("/create", methods=["POST"])
 def create():
@@ -133,6 +137,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/") 
