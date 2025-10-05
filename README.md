@@ -18,9 +18,10 @@ Vaatii Flaskin asennuksen:
 ```
 $ pip install flask
 ```
-Luo tietokannan taulu:
+Luo tietokannan taulu sekä lisätiedot:
 ```
 $ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < init.sql
 ```
 Sovelluksen käynnistys:
 ```
