@@ -79,13 +79,18 @@ def create_sighting():
 
     user_id = session["user_id"]
 
+    all_classes = sightings.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
-    print(classes)
-    
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
+
     sightings.add_sighting(bird_species, municipality, location, additional_info, user_id, classes)
 
     return redirect("/")
@@ -96,7 +101,13 @@ def edit_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
     if not sight:
         abort(404)
-    return render_template("edit_sighting.html", sight=sight)
+    all_classes = sightings.get_all_classes()
+    classes = {}
+    for my_class in all_classes:
+        classes[my_class] = ""
+    for entry in sightings.get_classes(sight_id):
+        classes[entry["title"]] = entry["value"]
+    return render_template("edit_sighting.html", sight=sight, classes=classes, all_classes=all_classes)
 
 @app.route("/update_sighting", methods=["POST"])
 def update_sighting():
@@ -119,7 +130,20 @@ def update_sighting():
     additional_info = request.form["additional_info"]
     check_requirements(additional_info, big_data_length, False)
 
-    sightings.update_sighting(sight_id, bird_species, municipality, location, additional_info)
+    all_classes = sightings.get_all_classes()
+
+    classes = []
+    for entry in request.form.getlist("classes"):
+        if entry:
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+
+    sightings.update_sighting(sight_id, bird_species, municipality, location, additional_info, classes)
 
     return redirect("/sight/" + str(sight_id))
 

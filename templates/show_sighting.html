@@ -15,8 +15,9 @@
     </p>   
     {% endif %}
     <p>
-        <strong>Lintuluokka</strong> </br>
+       
         {% for class in classes %}
+        <strong> {{class.title}} </strong> </br>
         {{ class.value }}
         {% endfor %}
     </p>

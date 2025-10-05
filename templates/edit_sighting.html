@@ -13,6 +13,21 @@
         <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
         <input type="text" name="bird_species" value="{{ sight.bird_species }}" maxlength="50" required/>
     </p>
+    {% for class in all_classes %}
+    <p>
+        {{ class }}: <br />
+        <select name="classes">
+            <option value="">(valitse)</option>
+        {% for option in all_classes[class]%}
+            {% if classes[class] == option %}
+            <option value= "{{ class }}:{{ option }}" selected>{{ option }}</option>
+            {% else %}
+            <option value= "{{ class }}:{{ option }}">{{ option }}</option>
+            {% endif %}
+        {% endfor %}
+        </select>
+    </p>
+    {% endfor %}    
     <p>
         Kaupunki: <br/>
         <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>

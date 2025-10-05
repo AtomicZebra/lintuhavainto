@@ -45,7 +45,7 @@ def get_sight(sight_id):
     result = db.query(sql,[sight_id])
     return result[0] if result else None
 
-def update_sighting(sight_id, bird_species, municipality, location, additional_info):
+def update_sighting(sight_id, bird_species, municipality, location, additional_info, classes):
     sql = """UPDATE items SET 
     bird_species = ?,
     municipality = ?,
@@ -55,7 +55,16 @@ def update_sighting(sight_id, bird_species, municipality, location, additional_i
     """
     db.execute(sql, [bird_species, municipality, location, additional_info, sight_id])
 
+    sql = "DELETE FROM item_classes WHERE item_id = ?"
+    db.execute(sql, [sight_id])
+
+    sql = """INSERT INTO item_classes(item_id, title, value) VALUES (?,?,?)"""
+    for title, value in classes:
+        db.execute(sql, [sight_id, title, value])
+
 def remove_sighting(sight_id):
+    sql = "DELETE FROM item_classes WHERE item_id = ?"
+    db.execute(sql, [sight_id])
     sql = "DELETE FROM items WHERE id = ?"
     db.execute(sql, [sight_id])
 
