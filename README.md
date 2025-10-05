@@ -35,7 +35,7 @@ Kaikki omat havainnot näkee kohdasta ```Omat havainnot```. Muiden havaintoja vo
 
 Viimeisimmät havainnot näkee pääsivun lopusta ja tarkastelemaan niitä painamalla linkeistä.
 
-Jos tehdyn havainnon haluaa poistaa tai muokata: Pääsivun ```Viimeisimmät havainnot``` klikkaa havaintoa, havaintosivulta löytyy painike havainnon muokkaukseen ja poistamiseen.
+Jos tehdyn havainnon haluaa poistaa tai muokata: Pääsivun ```Viimeisimmät havainnot``` klikkaa havaintoa tai käy omalla käyttäjäsivulla etsimässä havainnon ```Omat havainnot``` kohdasta, havaintosivulta löytyy painike havainnon muokkaukseen ja poistamiseen.
 
 Havaintoja voidaan hakea ```Etsi havainto``` kohdasta. Hakusanaksi käy ***lintulaji, lähiö tai kaupunki***.
 
