@@ -1,67 +1,83 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Lintuhavainto</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-  <h1>Lintuhavainto</h1>
+  <div class="header">
+    <h1>Lintuhavainto</h1>
+  </div>
 
+  {% for message in get_flashed_messages() %}
+  <div class="info">
+    <strong>{{ message }}</strong>
+  </div>
+  {% endfor %}
+
+  <div class="sign">
   {% if session.username %}
   <p>
     Olet kirjautunut sisään nimellä: <strong>{{ session.username }}</strong>
   </p>
+  </div>
   {% else %}
-  <form action="/login" method="post">
+
+  <div class="sign">
+    <form action="/login" method="post">
+      <p>
+        Tunnus: <br />
+        <input type="text" name="username" />
+      </p>
+      <p>
+        Salasana: <br />
+        <input type="password" name="password" />
+      </p>
+      <input type="submit" value="Kirjaudu" />
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="subheader2">
+    {% if session.username %}
+      <p>
+        <a href="/logout">Kirjaudu ulos</a>
+      </p>
+      {% else %}
+      <p>
+        <a href="/register">Luo tunnus</a>
+      </p>
+      {% endif %}
+  </div>
+
+  <div class="subheader">
+    {% if session.username %}
     <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
+      <a href="/user/{{session.user_id}}">Omat havainnot</a> |
+      <a href="/new_sighting">Uusi havainto</a> |
+    {% endif %}
+      <a href="/find_sighting">Etsi havainto</a>
     </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" />
-    </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  {% endif %}
-  {% if session.username %}
-  <p>
-    <a href="/logout">Kirjaudu ulos</a>
-  </p>
-  <p>
-    <a href="/user/{{session.user_id}}">Omat havainnot</a>
-  </p>
-  {% else %}
-  <p>
-    <a href="/register">Luo tunnus</a>
-  </p>
-  {% endif %}
 
-  <h3>Toiminnot</h3>
-  {% if session.username %}
-  <p>
-    <a href="/new_sighting">Uusi havainto</a>
-  </p>
-  {% endif %}
-  <p>
-    <a href="/find_sighting">Etsi havainto</a>
-  </p>
+  </div>
+    <div class="subheader2">
+    <h3>Käyttäjät</h3>
+    <ul>
+      {% for user in all_users %}
+      <li><a href="/user/{{ user.id }}">{{ user.username }}</a> </li>
+      {% endfor %}
+    </ul>
+  </div>
 
-  <h3>Käyttäjät
-  <ul>
-    {% for user in all_users %}
-    <li><a href="/user/{{ user.id }}">{{ user.username }}</a> </li>
-    {% endfor %}
-  </ul>
-  </h3>
-
-  <h2>Viimeisimmät havainnot</h2>
-  <ul>
-    {% for sight in sighting %}
-    <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
-    {% endfor %}
-  </ul>
+  <div class="subheader">
+    <h2>Viimeisimmät havainnot</h2>
+    <ul>
+      {% for sight in sighting %}
+      <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
+      {% endfor %}
+    </ul>
+  </div>
 </body>
 
 </html> 

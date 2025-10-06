@@ -3,56 +3,79 @@
 
 <head>
     <title>{{ sight.bird_species }}</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-    <h1>{{ sight.bird_species }}</h1>
-    <h2>{{ sight.time_added }}</h2>
+    <div class="header">
+        <h1>{{ sight.bird_species }}</h1>
+        <h2>{{ sight.time_added }}</h2>
+
+    </div>
+    {% for message in get_flashed_messages() %}
+    <div class="info">
+    <strong>{{ message }}</strong>
+    {% endfor %}    
+    </div>
+
     {% if session.user_id == sight.user_id %}
-    <p>
-        <a href="/edit_sighting/{{ sight.id }}">Muokkaa havaintoa</a>
-        <a href="/remove_sighting/{{ sight.id }}">Poista havainto</a>
-    </p>   
-    {% endif %}
-
-    <p>
-        {% for class in classes %}
-        <strong> {{class.title}} </strong> </br>
-        {{ class.value }}
-        {% endfor %}
-    </p>
-    <p>
-        <strong>Lähiö - Kaupunki</strong> </br>
-        {{ sight.location }} - {{ sight.municipality }}
-    </p>
-    <p>
-        <strong>Lisätiedot</strong> </br>
-        {{ sight.additional_info }}
-    </p>
-    <p>
-        <strong>Havainnoitsija</strong> </br>
-        <a href="/user/{{ sight.user_id }}"> {{ sight.username }}</a>
-    </p>
-
-    <h2>Keskustelu</h2>
-    {% for message in messages %}
-    <small>{{ message.time_sent }}</small>
-    <a href="/user%{{ message.user_id }}">{{ message.username }}</a>: {{ message.message }} </br>
-    {% endfor %}
-
-    <form action="/new_message" method="post">
+    <div class="subheader">
         <p>
-            <strong>Viesti</strong> </br>
-            <textarea name="message" rows="8" cols="40" maxlength="1000" required></textarea> </br>
-        </p>
-        <input type="hidden" name="sight_id" value="{{ sight.id }}">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Lähetä" />
-    </form>
+            <a href="/edit_sighting/{{ sight.id }}">Muokkaa havaintoa</a> |
+            <a href="/remove_sighting/{{ sight.id }}">Poista havainto</a>
+        </p>   
+        {% endif %}
+    </div>
 
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
+    <div class="subheader2">
+        <p>
+            {% for class in classes %}
+            <strong> {{class.title}} </strong> </br>
+            {{ class.value }}
+            {% endfor %}
+        </p>
+        <p>
+            <strong>Lähiö - Kaupunki</strong> </br>
+            {{ sight.location }} - {{ sight.municipality }}
+        </p>
+        <p>
+            <strong>Lisätiedot</strong> </br>
+            {{ sight.additional_info }}
+        </p>
+        <p>
+            <strong>Havainnoitsija</strong> </br>
+            <a href="/user/{{ sight.user_id }}"> {{ sight.username }}</a>
+        </p>
+    </div>
+
+    <div class="sign">  
+        <h2>Keskustelu</h2>
+        
+        {% if messages %}
+        <div class="message_bubble">
+            {% for message in messages %}
+            <small>{{ message.time_sent }}</small>
+            <a href="/user%{{ message.user_id }}">{{ message.username }}</a>: {{ message.message }} </br>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="/new_message" method="post">
+            <p>
+                <strong>Viesti</strong> </br>
+                <textarea name="message" rows="8" cols="40" maxlength="1000" required></textarea> </br>
+            </p>
+            <input type="hidden" name="sight_id" value="{{ sight.id }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" value="Lähetä" />
+        </form>
+    </div>
+
+    <div class="subheader2">
+        <p>
+            <a href="/">Takaisin</a>
+        </p>
+    </div>
 </body>
 
 </html>

@@ -3,50 +3,57 @@
 
 <head>
     <title>Uusi havainto</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-    <h1>Uusi havainto</h1>
+    <div class="header">
+        <h1>Uusi havainto</h1>
+    </div>
+
     <form action="/create_sighting" method="post">
-    <p>
-        Lintulaji: <br />
-        <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
-        <input type="text" name="bird_species" maxlength="50" required/>
-    </p>
 
-    {% for class in classes %}
-    <p>
-        {{ class }}: <br />
-        <select name="classes">
-            <option value="">(valitse)</option>
-        {% for option in classes[class]%}
-        <option value= "{{ class }}:{{ option }}">{{ option }}</option>
+    <div class="sign">
+        <p>
+            Lintulaji: <br />
+            <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
+            <input type="text" name="bird_species" maxlength="50" required/>
+        </p>
+
+        {% for class in classes %}
+        <p>
+            {{ class }}: <br />
+            <select name="classes">
+                <option value="">(valitse)</option>
+            {% for option in classes[class]%}
+            <option value= "{{ class }}:{{ option }}">{{ option }}</option>
+            {% endfor %}
+            </select>
+        </p>
         {% endfor %}
-        </select>
-    </p>
-    {% endfor %}
 
-    <p>
-        Kaupunki: <br/>
-        <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
-        <input type="text" name="municipality" maxlength="50" required/>
-    </p>
-    <p>
-        Lähiö: <br />
-        <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
-        <input type="text" name="location" maxlength="50" required/>
-    </p>
-    <p>
-        Lisätiedot: <br />
-        <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
-        <textarea name="additional_info" rows="8" cols="40" maxlength="1000"></textarea>
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Lisää havainto" />
-  </form>
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
+        <p>
+            Kaupunki: <br/>
+            <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
+            <input type="text" name="municipality" maxlength="50" required/>
+        </p>
+        <p>
+            Lähiö: <br />
+            <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
+            <input type="text" name="location" maxlength="50" required/>
+        </p>
+        <p>
+            Lisätiedot: <br />
+            <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
+            <textarea name="additional_info" rows="8" cols="40" maxlength="1000"></textarea>
+        </p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" value="Lisää havainto" />
+    </form>
+        <p>
+            <a href="/">Takaisin</a>
+        </p>
+    </div>
 </body>
 
 </html>

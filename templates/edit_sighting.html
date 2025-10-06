@@ -3,51 +3,57 @@
 
 <head>
     <title>Havainnon muokkaus</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-    <h1>Havainnon muokkaus</h1>
-    <form action="/update_sighting" method="post">
-    <p>
-        Lintulaji: <br />
-        <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
-        <input type="text" name="bird_species" value="{{ sight.bird_species }}" maxlength="50" required/>
-    </p>
-    {% for class in all_classes %}
-    <p>
-        {{ class }}: <br />
-        <select name="classes">
-            <option value="">(valitse)</option>
-        {% for option in all_classes[class]%}
-            {% if classes[class] == option %}
-            <option value= "{{ class }}:{{ option }}" selected>{{ option }}</option>
-            {% else %}
-            <option value= "{{ class }}:{{ option }}">{{ option }}</option>
-            {% endif %}
-        {% endfor %}
-        </select>
-    </p>
-    {% endfor %}    
-    <p>
-        Kaupunki: <br/>
-        <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
-        <input type="text" name="municipality" value="{{ sight.municipality }}" maxlength="50" required/>
-    </p>
-    <p>
-        Lähiö: <br />
-        <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
-        <input type="text" name="location" value="{{ sight.location }}" maxlength="50" required/>
-    </p>
-    <p>
-        Lisätiedot: <br />
-        <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
-        <textarea name="additional_info" rows="8" cols="40" maxlength="1000">{{ sight.additional_info }}</textarea>
-    </p>
-    <input type="hidden" name="sight_id" value="{{sight.id}}" />
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Päivitä havainto" />
-    <input type="submit" name="back" value="Palaa takaisin">
-  </form>
+    <div class="header">
+        <h1>Havainnon muokkaus</h1>
+    </div>
+
+    <div class="sign">
+        <form action="/update_sighting" method="post">
+        <p>
+            Lintulaji: <br />
+            <small>Esim. Sinisorsa, Valkoposkihanhi, Talitiainen</small> <br/>
+            <input type="text" name="bird_species" value="{{ sight.bird_species }}" maxlength="50" required/>
+        </p>
+        {% for class in all_classes %}
+        <p>
+            {{ class }}: <br />
+            <select name="classes">
+                <option value="">(valitse)</option>
+            {% for option in all_classes[class]%}
+                {% if classes[class] == option %}
+                <option value= "{{ class }}:{{ option }}" selected>{{ option }}</option>
+                {% else %}
+                <option value= "{{ class }}:{{ option }}">{{ option }}</option>
+                {% endif %}
+            {% endfor %}
+            </select>
+        </p>
+        {% endfor %}    
+        <p>
+            Kaupunki: <br/>
+            <small>Esim. Helsinki, Vantaa, Tampere</small> <br/>
+            <input type="text" name="municipality" value="{{ sight.municipality }}" maxlength="50" required/>
+        </p>
+        <p>
+            Lähiö: <br />
+            <small>Esim. Kannelmäki, Latokartano, Hietalahti</small> <br/>
+            <input type="text" name="location" value="{{ sight.location }}" maxlength="50" required/>
+        </p>
+        <p>
+            Lisätiedot: <br />
+            <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
+            <textarea name="additional_info" rows="8" cols="40" maxlength="1000">{{ sight.additional_info }}</textarea>
+        </p>
+        <input type="hidden" name="sight_id" value="{{sight.id}}" />
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="submit" value="Päivitä havainto" />
+        <input type="submit" name="back" value="Palaa takaisin">
+    </form>
+  </div>
 </body>
 
 </html>

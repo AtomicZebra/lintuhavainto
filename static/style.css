@@ -1,0 +1,49 @@
+body {
+    padding: 10px;
+    margin: auto;
+    max-width: 50em;
+    font-family: sans-serif;
+    background: #abdb9a;
+    color: white;
+}
+
+.header {
+    padding: 10px;
+    background-color: #3e993b;
+    color: white;
+}
+
+.subheader {
+    padding: 10px;
+    background-color: #B7B6C2;
+    color: black;
+}
+
+.subheader2 {
+    padding: 10px;
+    background-color: #D1D5DE;
+    color: black;
+}
+
+.info {
+  border: 8px solid #3e993b;
+  padding: 10px;
+  background-color: #2cc526;
+  color: white;
+}
+
+.sign {
+    padding: 10px;
+    background-color: #ffffff;
+    color: black;
+    margin: left;
+}
+
+.message_bubble {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #ffffff;
+    color: black;
+    margin: left;
+    overflow-wrap: break-word;
+}

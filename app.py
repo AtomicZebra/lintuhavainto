@@ -1,6 +1,6 @@
 import sqlite3, secrets
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import abort, flash, redirect, render_template, request, session
 import config, sightings, users, threads
 
 app = Flask(__name__)
@@ -96,7 +96,8 @@ def create_sighting():
             classes.append((class_title, class_value))
 
     sightings.add_sighting(bird_species, municipality, location, additional_info, user_id, classes)
-
+    
+    flash("Havainto lisätty")
     return redirect("/")
 
 @app.route("/edit_sighting/<int:sight_id>")
@@ -151,6 +152,7 @@ def update_sighting():
 
     sightings.update_sighting(sight_id, bird_species, municipality, location, additional_info, classes)
 
+    flash("Havainto muokattu")
     return redirect("/sight/" + str(sight_id))
 
 @app.route("/remove_sighting/<int:sight_id>", methods=["GET", "POST"])
@@ -163,6 +165,7 @@ def remove_sighting(sight_id):
     if request.method == "POST":
         if "remove" in request.form:
             sightings.remove_sighting(sight_id)
+            flash("Havainto poistettu")
             return redirect("/")
         else:
             return redirect("/sight/" + str(sight_id))
@@ -183,6 +186,7 @@ def new_message():
 
     threads.add_message(sight_id, user_id, message)
 
+    flash("Viesti lähetetty")
     return redirect("/sight/" + str(sight_id))
 
 @app.route("/register")
@@ -197,15 +201,22 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
-    
+        flash("VIRHE: salasanat eivät ole samat")
+        return redirect("/register")
+    if len(username) < 4 or len(password1) < 4:
+        flash("Käyttäjätunnuksen ja/tai salasanan täytyy olla vähintään 4 merkkiä pitkä")
+        return redirect("/register")
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        flash("VIRHE: tunnus on jo varattu")
+        return redirect("/register")
+    
+    flash("Tunnus luotu")
+    return redirect("/")
 
-    return "Tunnus luotu"
 
+    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -223,11 +234,13 @@ def login():
             session["username"] = username
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: väärä tunnus tai salasana")
+            return redirect("/")
 
 @app.route("/logout")
 def logout():
     if "user_id" in session:
         del session["user_id"]
         del session["username"]
+        flash("Kirjauduit ulos")
     return redirect("/") 

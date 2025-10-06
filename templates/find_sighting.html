@@ -3,31 +3,39 @@
 
 <head>
     <title>Etsi havainto</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-    <h1>Etsi havainto</h1>
-    
-    <form action="/find_sighting" method="get">
+    <div class="header">
+        <h1>Etsi havainto</h1>
+    </div>
+
+    <div class="sign">
+        <form action="/find_sighting" method="get">
+            <p>
+                <small>HUOM. Haku toimii lintulajeilla, lähiöillä tai kaupungeilla</small> <br/>
+                Hakusana: <input type="text" name="query" value="{{ query }}">
+            </p>
+            <input type="submit" value="Lähetä">
+        </form>
         <p>
-            <small>HUOM. Haku toimii lintulajeilla, lähiöillä tai kaupungeilla</small> <br/>
-            Hakusana: <input type="text" name="query" value="{{ query }}">
+            <a href="/">Takaisin</a>
         </p>
-        <input type="submit" value="Lähetä">
-    </form>
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
+    </div>
+
     {% if query %}
-    <h2>Tulokset</h2>
-    <ul>
-        {% for sight in results %}
-        <li>
-            <a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="subheader">
+        <h2>Tulokset</h2>
+        <ul>
+            {% for sight in results %}
+            <li>
+                <a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
 </body>
 
 </html> 

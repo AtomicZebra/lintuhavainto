@@ -3,22 +3,31 @@
 
 <head>
     <title>Käyttäjä: {{ user.username }}</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-    <h1>Käyttäjä: {{ user.username }} </h1>
-    <p>
-        Käyttäjältä on yhteensä {{ sighting | count }} havaintoa.
-    </p>
-    <h2>Havainnot</h2>
-    <ul>
-        {% for sight in sighting %}
-        <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="/">Takaisin</a>
-    </p>
+    <div class="header">
+        <h1>Käyttäjä: {{ user.username }} </h1>
+    </div>
+    
+    <div class="sign">
+        <p>
+            Käyttäjältä on yhteensä {{ sighting | count }} havaintoa.
+        </p>
+    </div>
+
+    <div class="subheader">
+        <h2>Havainnot</h2>
+        <ul>
+            {% for sight in sighting %}
+            <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
+            {% endfor %}
+        </ul>
+        <p>
+            <a href="/">Takaisin</a>
+        </p>
+    </div>
 </body>
 
 </html>
