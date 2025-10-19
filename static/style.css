@@ -23,6 +23,7 @@ body {
     padding: 10px;
     background-color: #D1D5DE;
     color: black;
+    overflow-wrap: break-word;
 }
 
 .info {

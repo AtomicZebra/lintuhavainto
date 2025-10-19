@@ -11,7 +11,7 @@
         <h1>Uusi havainto</h1>
     </div>
 
-    <form action="/create_sighting" method="post">
+    <form action="/create_sighting" method="post" enctype="multipart/form-data">
 
     <div class="sign">
         <p>
@@ -47,6 +47,7 @@
             <small>Esim. Missä tarkalleen havaittu, tarkempi osoite, olosuhteet</small> <br/>
             <textarea name="additional_info" rows="8" cols="40" maxlength="1000"></textarea>
         </p>
+        
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Lisää havainto" />
     </form>

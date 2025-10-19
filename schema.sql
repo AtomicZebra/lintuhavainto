@@ -11,8 +11,7 @@ CREATE TABLE items (
     location TEXT,
     additional_info TEXT,
     user_id INTEGER REFERENCES users,
-    time_added TEXT,
-    image BLOB
+    time_added TEXT
 );
 
 CREATE TABLE thread(
@@ -29,7 +28,7 @@ CREATE TABLE classes (
     value TEXT
 );
 
-CREATE TABLE item classes (
+CREATE TABLE item_classes (
     id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES items,
     title TEXT,

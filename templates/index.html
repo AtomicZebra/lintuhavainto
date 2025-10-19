@@ -59,23 +59,29 @@
     {% endif %}
       <a href="/find_sighting">Etsi havainto</a>
     </p>
-
   </div>
-    <div class="subheader2">
+
+  <div class="subheader2">
     <h3>Käyttäjät</h3>
     <ul>
-      {% for user in all_users %}
+      {% if all_users %} {% for user in all_users %}
       <li><a href="/user/{{ user.id }}">{{ user.username }}</a> </li>
-      {% endfor %}
+      {% endfor %} 
+      {% else %}
+      <p>Käyttäjiä ei löytynyt.</p>
+      {% endif %}
     </ul>
   </div>
 
   <div class="subheader">
     <h2>Viimeisimmät havainnot</h2>
     <ul>
-      {% for sight in sighting %}
+      {% if sighting %} {% for sight in sighting %}
       <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
       {% endfor %}
+      {% else %}
+      <p>Ei havaintoja.</p>
+      {% endif %}
     </ul>
   </div>
 </body>

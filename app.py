@@ -159,15 +159,17 @@ def update_sighting():
 def remove_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
     require_login()
+
     if request.method == "GET":
         return render_template("remove_sighting.html", sight=sight)
     
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             sightings.remove_sighting(sight_id)
             flash("Havainto poistettu")
             return redirect("/")
-        else:
+        if "back" in request.form:
             return redirect("/sight/" + str(sight_id))
 
 @app.route("/new_message", methods=["POST"])
@@ -204,8 +206,10 @@ def create():
         flash("VIRHE: salasanat eivät ole samat")
         return redirect("/register")
     if len(username) < 4 or len(password1) < 4:
-        flash("Käyttäjätunnuksen ja/tai salasanan täytyy olla vähintään 4 merkkiä pitkä")
+        flash("VIRHE: käyttäjätunnuksen ja/tai salasanan täytyy olla vähintään 4 merkkiä pitkä")
         return redirect("/register")
+    if len(username) > 15:
+        flash("VIRHE: käyttäjätunnus liian pitkä")
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:

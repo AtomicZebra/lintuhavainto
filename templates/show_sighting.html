@@ -55,9 +55,11 @@
         <div class="message_bubble">
             {% for message in messages %}
             <small>{{ message.time_sent }}</small>
-            <a href="/user%{{ message.user_id }}">{{ message.username }}</a>: {{ message.message }} </br>
+            <a href="/user/{{ message.user_id }}">{{ message.username }}</a>: {{ message.message }} </br>
             {% endfor %}
         </div>
+        {% else %}
+        <p>Ei viestejä.</p>
         {% endif %}
 
         <form action="/new_message" method="post">

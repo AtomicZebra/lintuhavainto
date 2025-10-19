@@ -58,15 +58,18 @@ def update_sighting(sight_id, bird_species, municipality, location, additional_i
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [sight_id])
 
-    sql = """INSERT INTO item_classes(item_id, title, value) VALUES (?,?,?)"""
+    sql = "INSERT INTO item_classes(item_id, title, value) VALUES (?,?,?)"
     for title, value in classes:
         db.execute(sql, [sight_id, title, value])
 
 def remove_sighting(sight_id):
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [sight_id])
+    sql = "DELETE FROM thread WHERE item_id = ?"
+    db.execute(sql, [sight_id])
     sql = "DELETE FROM items WHERE id = ?"
     db.execute(sql, [sight_id])
+
 
 def find_sightings(query):
     sql = """SELECT id, bird_species, time_added

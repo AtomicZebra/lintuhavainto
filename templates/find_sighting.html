@@ -28,11 +28,14 @@
     <div class="subheader">
         <h2>Tulokset</h2>
         <ul>
-            {% for sight in results %}
+            {% if results %}{% for sight in results %}
             <li>
                 <a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }}</a>
             </li>
             {% endfor %}
+            {% else %}
+            <p>Ei tuloksia.</p>
+            {% endif %}
         </ul>
         {% endif %}
     </div>
