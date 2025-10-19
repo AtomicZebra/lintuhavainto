@@ -8,9 +8,7 @@
 - Käyttäjä voi hakea lintuhavaintoja hakusanalla
 - Käyttäjä voi luokitella linnut luokkiin (sorsalinnut, päiväpetolinnut, jne)
 - Käyttäjäsivu näyttää mitä havaintoja käyttäjä on tehnyt
-
-### Sovelluksen puuttuvat ominaisuudet:
-- Havainnon kuvan lisäys
+- Käyttäjä pystyy lisäämään komentteja toisten havaintoihin
 
 ## Sovelluksen asennus ja käyttö
 ### Asennus
@@ -32,7 +30,7 @@ Pääsivulla voi luoda tunnuksen, kirjautua sisään sekä ulos.
 
 Havaintojen luonti tapahtuu tunnuksilla pääsivulla ```Luo tunnus``` kohdasta.
 
-Kaikki omat havainnot näkee kohdasta ```Omat havainnot```. Muiden havaintoja voi käydä katsomassa niiden käyttäjien sivuilla.
+Kaikki omat havainnot näkee kohdasta ```Omat havainnot```. Muiden havaintoja voi käydä katsomassa heidän käyttäjien sivuilla.
 
 Viimeisimmät havainnot näkee pääsivun lopusta ja tarkastelemaan niitä painamalla linkeistä.
 
@@ -40,4 +38,4 @@ Jos tehdyn havainnon haluaa poistaa tai muokata: Pääsivun ```Viimeisimmät hav
 
 Havaintoja voidaan hakea ```Etsi havainto``` kohdasta. Hakusanaksi käy ***lintulaji, lähiö tai kaupunki***.
 
-Havaintoihin voi laittaa komentteja. Komentteja ei voi vielä muokata tai poistaa.
+Havaintoihin voi laittaa komentteja. Oman komentin voi poistaa klikkaamalla omaa komenttia.
