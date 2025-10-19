@@ -108,7 +108,7 @@ def edit_sighting(sight_id):
         abort(404)
     if sight["user_id"] != session["user_id"]:
         abort(403)
-        
+
     all_classes = sightings.get_all_classes()
     classes = {}
     for my_class in all_classes:
@@ -244,11 +244,15 @@ def create():
     if password1 != password2:
         flash("VIRHE: salasanat eivät ole samat")
         return redirect("/register")
+    if " " in username or " " in password1:
+        flash("VIRHE: käyttäjätunnuksessa ja/tai salasanassa ei saa olla välilyöntejä")
+        return redirect("/register")
     if len(username) < 4 or len(password1) < 4:
         flash("VIRHE: käyttäjätunnuksen ja/tai salasanan täytyy olla vähintään 4 merkkiä pitkä")
         return redirect("/register")
     if len(username) > 15:
         flash("VIRHE: käyttäjätunnus liian pitkä")
+        return redirect("/register")
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
