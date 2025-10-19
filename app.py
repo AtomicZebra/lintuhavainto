@@ -106,6 +106,9 @@ def edit_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
     if not sight:
         abort(404)
+    if sight["user_id"] != session["user_id"]:
+        abort(403)
+        
     all_classes = sightings.get_all_classes()
     classes = {}
     for my_class in all_classes:
