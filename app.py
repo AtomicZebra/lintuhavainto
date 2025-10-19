@@ -21,10 +21,10 @@ def check_csrf():
 #Check whether data is within the required limits
 def check_requirements(data, length: int, required: bool):
     if required:
-        if len(data) > length or not data:
+        if len(data) - data.count(" ") > length or not data:
             abort(403)
     else:
-        if len(data) > length:
+        if len(data) - data.count(" ") > length:
             abort(403)
 
 @app.route("/")
@@ -125,6 +125,9 @@ def update_sighting():
     if not sight:
         abort(404)
 
+    if sight["user_id"] != session["user_id"]:
+        abort(403)
+
     bird_species = request.form["bird_species"]
     check_requirements(bird_species, small_data_length, True)
 
@@ -160,6 +163,12 @@ def remove_sighting(sight_id):
     sight = sightings.get_sight(sight_id)
     require_login()
 
+    if not sight:
+        abort(404)
+
+    if sight["user_id"] != session["user_id"]:
+        abort(403)
+
     if request.method == "GET":
         return render_template("remove_sighting.html", sight=sight)
     
@@ -169,8 +178,6 @@ def remove_sighting(sight_id):
             sightings.remove_sighting(sight_id)
             flash("Havainto poistettu")
             return redirect("/")
-        if "back" in request.form:
-            return redirect("/sight/" + str(sight_id))
 
 @app.route("/new_message", methods=["POST"])
 def new_message():
@@ -186,10 +193,39 @@ def new_message():
 
     user_id = session["user_id"]
 
+    check_requirements(message, big_data_length, False)
+
+    #Check if message is empty
+    if message.isspace():
+        flash("Viestikenttä tyhjä")
+        return redirect("/sight/" + str(sight_id))
+
     threads.add_message(sight_id, user_id, message)
 
     flash("Viesti lähetetty")
     return redirect("/sight/" + str(sight_id))
+
+@app.route("/remove_message/<int:message_id>", methods=["GET", "POST"])
+def remove_message(message_id):
+    message = threads.get_single_message(message_id)
+    require_login()
+
+    if not message:
+        abort(404)
+
+    if message["user_id"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("remove_message.html", message=message)
+    
+    if request.method == "POST":
+        sight_id = request.form["sight_id"]
+        check_csrf()
+        if "remove" in request.form:
+            threads.remove_message(message_id)
+            flash("Viesti poistettu")
+            return redirect("/sight/" + str(sight_id))
 
 @app.route("/register")
 def register():

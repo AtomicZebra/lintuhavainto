@@ -14,7 +14,7 @@
     </div>
     {% for message in get_flashed_messages() %}
     <div class="info">
-    <strong>{{ message }}</strong>
+    <b>{{ message }}</b>
     {% endfor %}    
     </div>
 
@@ -30,20 +30,24 @@
     <div class="subheader2">
         <p>
             {% for class in classes %}
-            <strong> {{class.title}} </strong> </br>
+            <b> {{class.title}} </b> </br>
             {{ class.value }}
             {% endfor %}
         </p>
         <p>
-            <strong>Lähiö - Kaupunki</strong> </br>
+            <b>Lähiö - Kaupunki</b> </br>
             {{ sight.location }} - {{ sight.municipality }}
         </p>
         <p>
-            <strong>Lisätiedot</strong> </br>
+            <b>Lisätiedot</b> </br>
+            {% if sight.additional_info %}
             {{ sight.additional_info }}
+            {% else %}
+            Ei lisätietoja
+            {% endif %}
         </p>
         <p>
-            <strong>Havainnoitsija</strong> </br>
+            <b>Havainnoitsija</b> </br>
             <a href="/user/{{ sight.user_id }}"> {{ sight.username }}</a>
         </p>
     </div>
@@ -55,22 +59,30 @@
         <div class="message_bubble">
             {% for message in messages %}
             <small>{{ message.time_sent }}</small>
-            <a href="/user/{{ message.user_id }}">{{ message.username }}</a>: {{ message.message }} </br>
+            <a href="/user/{{ message.user_id }}">{{ message.username }}</a>: 
+            
+            {% if message.user_id == session.user_id %}
+            <a href="/remove_message/{{ message.id }}"> {{ message.message }}</a> </br>
+            {% else %}
+            {{ message.message }} </br>
+            {% endif %}
             {% endfor %}
         </div>
         {% else %}
-        <p>Ei viestejä.</p>
+        Ei viestejä
         {% endif %}
 
+        {% if session.username %}
         <form action="/new_message" method="post">
             <p>
-                <strong>Viesti</strong> </br>
+                <b>Viesti</b> </br>
                 <textarea name="message" rows="8" cols="40" maxlength="1000" required></textarea> </br>
             </p>
             <input type="hidden" name="sight_id" value="{{ sight.id }}">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Lähetä" />
         </form>
+        {% endif %}
     </div>
 
     <div class="subheader2">

@@ -12,14 +12,14 @@
 
   {% for message in get_flashed_messages() %}
   <div class="info">
-    <strong>{{ message }}</strong>
+    <b>{{ message }}</b>
   </div>
   {% endfor %}
 
   <div class="sign">
   {% if session.username %}
   <p>
-    Olet kirjautunut sisään nimellä: <strong>{{ session.username }}</strong>
+    Olet kirjautunut sisään nimellä: <b>{{ session.username }}</b>
   </p>
   </div>
   {% else %}
@@ -74,13 +74,13 @@
   </div>
 
   <div class="subheader">
-    <h2>Viimeisimmät havainnot</h2>
+    <h3>Viimeisimmät havainnot</h3>
     <ul>
       {% if sighting %} {% for sight in sighting %}
       <li><a href="/sight/{{ sight.id }}">{{ sight.bird_species }} - {{ sight.time_added }} </a> </li>
       {% endfor %}
       {% else %}
-      <p>Ei havaintoja.</p>
+      <p>Ei havaintoja</p>
       {% endif %}
     </ul>
   </div>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Viestin poisto</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Viestin poisto</h1>
+    </div>
+
+    <div class="subheader">
+        <p>{{message.username}}: {{ message.message }}</p>
+        <p>{{ message.time_sent }}</p>
+    </div>
+
+    <div class="sign">
+        <p>Haluatko poistaa tämän viestin?</p>
+        <form action="/remove_message/{{ message.id }}" method="post">
+            <input type="submit" name="remove" value="Poista viesti">
+            <input type="hidden" name="sight_id" value="{{message.sight_id}}" />
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        </form>
+    </br>
+    <a href="/sight/{{ message.sight_id }}">Takaisin</a>
+    </div>
+</body>
+
+</html>

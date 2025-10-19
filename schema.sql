@@ -4,7 +4,7 @@ CREATE TABLE users (
     password_hash TEXT
 );
 
-CREATE TABLE items (
+CREATE TABLE sighting (
     id INTEGER PRIMARY KEY,
     bird_species TEXT,
     municipality TEXT,
@@ -16,7 +16,7 @@ CREATE TABLE items (
 
 CREATE TABLE thread(
     id INTEGER PRIMARY KEY,
-    item_id INTEGER REFERENCES items,
+    sight_id INTEGER REFERENCES sighting,
     user_id INTEGER REFERENCES users,
     message TEXT,
     time_sent TEXT
@@ -28,9 +28,9 @@ CREATE TABLE classes (
     value TEXT
 );
 
-CREATE TABLE item_classes (
+CREATE TABLE sighting_classes (
     id INTEGER PRIMARY KEY,
-    item_id INTEGER REFERENCES items,
+    sight_id INTEGER REFERENCES sighting,
     title TEXT,
     value TEXT
 );
